@@ -29,12 +29,15 @@ public class JsonParser {
             for (Object it: ticketsJsonArray) {
                 JSONObject ticketsJsonObject = (JSONObject) it;
 
+
                 String dep_time = (String) ticketsJsonObject.get("departure_time");
                 String dep_date = (String) ticketsJsonObject.get("departure_date");
                 String arr_time = (String) ticketsJsonObject.get("arrival_time");
                 String arr_date = (String) ticketsJsonObject.get("arrival_date");
+                String or_name = (String) ticketsJsonObject.get("origin_name");
+                String dest_name = (String) ticketsJsonObject.get("destination_name");
 
-                DataTickets ticket = new DataTickets(dep_time, dep_date, arr_time,  arr_date);
+                DataTickets ticket = new DataTickets(dep_time, dep_date, arr_time,  arr_date, or_name, dest_name);
 
                 ticketsList.add(ticket);
             }

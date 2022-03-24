@@ -2,12 +2,14 @@ package src;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class CalculateBlock {
+
+    public boolean check_destination(DataTickets ticket) {
+        return (Objects.equals(ticket.origin_name, "Тель-Авив") && Objects.equals(ticket.destination_name, "Владивосток"))
+                || (Objects.equals(ticket.destination_name, "Тель-Авив") && Objects.equals(ticket.origin_name, "Владивосток"));
+    }
 
     public List<Double> getListTime(List<DataTickets> ticketsList) {
 
@@ -15,16 +17,18 @@ public class CalculateBlock {
 
         try {
             for (DataTickets tickets : ticketsList) {
+                    if (check_destination(tickets))
+                    {
+                        double departure_time =
+                                new SimpleDateFormat("dd.MM.yy HH:mm", new Locale("ru"))
+                                        .parse(tickets.departure_date + " " + tickets.departure_time).getTime();
 
-                double departure_time =
-                        new SimpleDateFormat("dd.MM.yy HH:mm", new Locale("ru"))
-                                .parse(tickets.departure_date + " " + tickets.departure_time).getTime();
+                        double arrival_time =
+                                new SimpleDateFormat("dd.MM.yy HH:mm", new Locale("ru"))
+                                        .parse(tickets.arrival_date + " " + tickets.arrival_time).getTime();
 
-                double arrival_time =
-                        new SimpleDateFormat("dd.MM.yy HH:mm", new Locale("ru"))
-                                .parse(tickets.arrival_date + " " + tickets.arrival_time).getTime();
-
-                listFlightTime.add((arrival_time - departure_time) / (1000 * 60));
+                        listFlightTime.add((arrival_time - departure_time) / (1000 * 60));
+                    }
             }
         } catch (ParseException e) {
             e.printStackTrace();
