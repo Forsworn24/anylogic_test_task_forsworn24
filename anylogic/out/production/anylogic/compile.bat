@@ -1,0 +1,1 @@
+javac -encoding utf-8 -d bin -sourcepath src -cp "lib/*" src/*
